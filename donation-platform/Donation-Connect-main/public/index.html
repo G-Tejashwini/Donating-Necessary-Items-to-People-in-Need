@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donation Connect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'DM Sans', sans-serif; }
+    .hero-bg { background: radial-gradient(circle at 80% 20%, #dbeafe 0, transparent 30%), linear-gradient(135deg,#eff6ff,#f8fafc 60%,#ecfdf5); }
+    .hidden-view { display:none !important; }
+    .panel { background:white; border:1px solid #e5e7eb; border-radius:18px; box-shadow:0 8px 28px rgba(15,23,42,.05); }
+    .btn { border-radius:11px; padding:10px 16px; font-weight:700; transition:.15s; }
+    .btn-primary { background:#1d4ed8; color:white; } .btn-primary:hover { background:#1e40af; }
+    .btn-soft { background:#eff6ff; color:#1d4ed8; } .btn-soft:hover { background:#dbeafe; }
+    .field { width:100%; border:1px solid #cbd5e1; border-radius:10px; padding:11px 12px; outline:none; background:white; }
+    .field:focus { border-color:#2563eb; box-shadow:0 0 0 3px #bfdbfe80; }
+    .muted { color:#64748b; }
+    .stat { font-size:1.8rem; font-weight:800; letter-spacing:-.04em; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <nav class="bg-white border-b border-slate-200 sticky top-0 z-20">
+    <div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
+      <a href="#" onclick="showHome()" class="flex items-center gap-3">
+        <span class="w-10 h-10 rounded-xl bg-blue-700 text-white grid place-items-center text-xl">♥</span>
+        <span class="font-extrabold text-xl tracking-tight">Donation<span class="text-blue-700">Connect</span></span>
+      </a>
+      <div class="flex items-center gap-3">
+        <span id="navUser" class="text-sm muted hidden md:inline"></span>
+        <button id="navLogin" class="btn btn-soft" onclick="openAuth()">Sign in</button>
+        <button id="navLogout" class="btn btn-primary hidden-view" onclick="logout()">Sign out</button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="homeView">
+    <section class="hero-bg">
+      <div class="max-w-7xl mx-auto px-5 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <span class="inline-flex items-center gap-2 bg-white text-blue-800 rounded-full px-4 py-2 text-sm font-bold shadow-sm">● Giving made transparent</span>
+          <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mt-6 tracking-tight">Small acts.<br><span class="text-blue-700">Big impact.</span></h1>
+          <p class="text-lg text-slate-600 mt-5 max-w-xl">Connect people who want to help with communities that need support. Give essentials, support a drive, and follow every contribution.</p>
+          <div class="flex flex-wrap gap-3 mt-8">
+            <button class="btn btn-primary px-6 py-3" onclick="openAuth('donor')">Become a donor</button>
+            <button class="btn btn-soft px-6 py-3" onclick="openAuth('recipient')">Request support</button>
+          </div>
+        </div>
+        <div class="panel p-7 md:p-9">
+          <div class="flex justify-between items-center"><span class="font-bold text-lg">Our community impact</span><span class="text-emerald-700 text-sm font-bold">Live demo data</span></div>
+          <div class="grid grid-cols-2 gap-5 mt-7">
+            <div class="bg-blue-50 rounded-2xl p-5"><div class="text-3xl">🎁</div><div class="stat mt-2" id="impactRaised">₹1.09L</div><div class="muted text-sm">Raised so far</div></div>
+            <div class="bg-emerald-50 rounded-2xl p-5"><div class="text-3xl">🤝</div><div class="stat mt-2" id="impactDrives">3</div><div class="muted text-sm">Active drives</div></div>
+          </div>
+          <p class="text-sm muted mt-6">Every contribution is recorded so donors and administrators can track progress.</p>
+        </div>
+      </div>
+    </section>
+    <section class="max-w-7xl mx-auto px-5 py-14">
+      <div class="flex flex-wrap items-end justify-between gap-4 mb-7">
+        <div><p class="text-blue-700 font-bold text-sm uppercase tracking-wider">Make a difference</p><h2 class="text-3xl font-extrabold mt-1">Active donation drives</h2></div>
+        <button class="btn btn-soft" onclick="openAuth('donor')">Donate to a drive →</button>
+      </div>
+      <div id="publicDrives" class="grid md:grid-cols-3 gap-5"></div>
+    </section>
+    <section class="bg-white border-y border-slate-200">
+      <div class="max-w-7xl mx-auto px-5 py-14">
+        <h2 class="text-3xl font-extrabold text-center">One platform. Three roles.</h2>
+        <div class="grid md:grid-cols-3 gap-5 mt-8">
+          <div class="panel p-6"><div class="text-3xl">🛡️</div><h3 class="font-extrabold text-xl mt-3">Admin</h3><p class="muted mt-2">Manage drives, review help requests and monitor transparent reports.</p></div>
+          <div class="panel p-6"><div class="text-3xl">🎁</div><h3 class="font-extrabold text-xl mt-3">Donor</h3><p class="muted mt-2">Contribute to active drives and review your donation history.</p></div>
+          <div class="panel p-6"><div class="text-3xl">🙌</div><h3 class="font-extrabold text-xl mt-3">Recipient</h3><p class="muted mt-2">Submit support requests and track their approval status.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <main id="authView" class="hidden-view max-w-lg mx-auto px-5 py-12">
+    <div class="panel p-7 md:p-9">
+      <button class="text-blue-700 font-bold text-sm" onclick="showHome()">← Back to home</button>
+      <h1 class="text-3xl font-extrabold mt-5" id="authTitle">Welcome back</h1>
+      <p class="muted mt-2" id="authSubtitle">Sign in to your Donation Connect account.</p>
+      <div class="flex gap-2 mt-6 bg-slate-100 p-1 rounded-xl">
+        <button id="loginTab" class="flex-1 btn btn-primary" onclick="setAuthMode('login')">Sign in</button>
+        <button id="registerTab" class="flex-1 btn" onclick="setAuthMode('register')">Create account</button>
+      </div>
+      <form id="authForm" class="space-y-4 mt-6">
+        <div id="nameField" class="hidden-view"><label class="text-sm font-bold">Full name</label><input id="authName" class="field mt-1" placeholder="Your name"></div>
+        <div><label class="text-sm font-bold">Email address</label><input id="authEmail" type="email" class="field mt-1" required placeholder="you@example.com"></div>
+        <div><label class="text-sm font-bold">Password</label><input id="authPassword" type="password" class="field mt-1" required minlength="8" placeholder="At least 8 characters"></div>
+        <div id="roleField" class="hidden-view"><label class="text-sm font-bold">I want to</label><select id="authRole" class="field mt-1"><option value="donor">Donate / help others</option><option value="recipient">Request support</option></select></div>
+        <button class="btn btn-primary w-full py-3" id="authSubmit">Sign in</button>
+      </form>
+      <div id="demoAccounts" class="mt-6 p-4 bg-slate-50 rounded-xl text-xs text-slate-600 leading-6">
+        <b>Demo accounts</b><br>Admin: admin@donationconnect.test / Admin@123<br>Donor: donor@donationconnect.test / Donor@123<br>Recipient: recipient@donationconnect.test / Recipient@123
+      </div>
+      <p id="authMessage" class="text-sm mt-4"></p>
+    </div>
+  </main>
+
+  <main id="dashboardView" class="hidden-view max-w-7xl mx-auto px-5 py-10">
+    <div class="flex flex-wrap justify-between items-end gap-4 mb-8">
+      <div><p class="text-blue-700 font-bold text-sm uppercase tracking-wider" id="roleLabel">Dashboard</p><h1 class="text-3xl md:text-4xl font-extrabold mt-1" id="dashboardTitle">Welcome</h1><p class="muted mt-2" id="dashboardDesc"></p></div>
+      <button class="btn btn-soft" onclick="showHome()">View public page</button>
+    </div>
+    <div id="dashboardContent"></div>
+  </main>
+
+  <footer class="bg-slate-900 text-slate-300 mt-12">
+    <div class="max-w-7xl mx-auto px-5 py-8 flex flex-wrap justify-between gap-3 text-sm"><span>© 2026 Donation Connect · Academic project prototype</span><span>Admin · Donor · Recipient</span></div>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
